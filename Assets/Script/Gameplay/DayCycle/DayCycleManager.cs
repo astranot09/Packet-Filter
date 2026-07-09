@@ -29,9 +29,16 @@ public class DayCycleManager : MonoBehaviour
     [SerializeField] private float currCountdown;
     [SerializeField] private int minuteGet = 5;
 
+    [Header("NPC")]
+    [SerializeField] private List<ShopHour> listShop = new List<ShopHour>();
+
     [Header("Reference")]
     [SerializeField] private DayCycleUI dayCycleUI;
 
+    private void Start()
+    {
+        CheckShopStatus();
+    }
     private void Update()
     {
         if (onGameplay)
@@ -56,6 +63,7 @@ public class DayCycleManager : MonoBehaviour
             AddHour(1);
         }
         dayCycleUI.UpdateDayCycleUI();
+        CheckShopStatus();
     }
 
     public void AddHour(int value)
@@ -66,12 +74,34 @@ public class DayCycleManager : MonoBehaviour
             NextDay();
         }
         dayCycleUI.UpdateDayCycleUI();
+        CheckShopStatus();
     }
 
     public void NextDay()
     {
         dayCount++;
         dayCycleUI.UpdateDayCycleUI();
+    }
+
+
+    // ========= CHECK ABOUT NPC ==============
+
+    public void CheckShopStatus()
+    {
+        foreach(ShopHour shop in listShop)
+        {
+            Debug.Log("Check");
+            if(Hour >= shop.OpenHour && hour < shop.CloseHour)
+            {
+                shop.ShopOpen();
+                Debug.Log("True");
+            }
+            else
+            {
+                shop.ShopClose();
+                Debug.Log("False");
+            }
+        }
     }
 
 }

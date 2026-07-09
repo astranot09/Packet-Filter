@@ -19,7 +19,12 @@ public class PlayerScript : MonoBehaviour
         if(currentExperience >= maxExperience)
         {
             currentExperience -= maxExperience;
-            //LevelUp
+            PlayerLevelUp();
         }
+    }
+
+    public void PlayerLevelUp()
+    {
+        playerLevel++;
     }
 }
