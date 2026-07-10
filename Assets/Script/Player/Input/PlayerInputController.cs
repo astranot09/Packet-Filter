@@ -6,12 +6,21 @@ using UnityEngine.InputSystem;
 public class PlayerInputController : MonoBehaviour
 {
 
+    public static PlayerInputController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     [Header("Reference")]
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerInteractSystem interactSystem;
 
-
+    [SerializeField] private PlayerInput playerInput;
 
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -32,4 +41,22 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
+    public void TurnOffPlayerInput()
+    {
+        if (playerInput != null)
+        {
+            playerInput.enabled = false;
+
+            // PENTING: Saat input dimatikan, paksa arah gerak player ke 0 
+            // agar player tidak "jalan terus" jika input dimatikan saat tombol ditekan
+            playerMovement.SetCurrentDirection(Vector2.zero);
+        }
+    }
+    public void TurnOnPlayerInput()
+    {
+        if (playerInput != null)
+        {
+            playerInput.enabled = true;
+        }
+    }
 }
