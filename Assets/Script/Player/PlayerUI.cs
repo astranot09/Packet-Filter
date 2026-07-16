@@ -14,29 +14,60 @@ public class PlayerUI : MonoBehaviour
     [Header("Experience")]
     [SerializeField] private TMP_Text playerLevelUI;
     [SerializeField] private Slider playerSliderProgressUI;
+
     private void OnEnable()
     {
-        PlayerScript.instance.onCurrencyChanged += UpdateCurrencyUI;
+        if(PlayerScript.instance != null)
+        {
+            PlayerScript.instance.onCurrencyChanged += UpdateCurrencyUI;
 
-        PlayerScript.instance.onExperienceChanged += UpdateExperienceUI;
+            PlayerScript.instance.onExperienceChanged += UpdateExperienceUI;
 
-        PlayerScript.instance.onHungerChanged += UpdateHungerUI;
+            PlayerScript.instance.onHungerChanged += UpdateHungerUI;
+        }
+
     }
     private void OnDisable()
     {
-        PlayerScript.instance.onCurrencyChanged -= UpdateCurrencyUI;
+        if (PlayerScript.instance != null)
+        {
+            PlayerScript.instance.onCurrencyChanged -= UpdateCurrencyUI;
 
-        PlayerScript.instance.onExperienceChanged -= UpdateExperienceUI;
+            PlayerScript.instance.onExperienceChanged -= UpdateExperienceUI;
 
-        PlayerScript.instance.onHungerChanged -= UpdateHungerUI;
+            PlayerScript.instance.onHungerChanged -= UpdateHungerUI;
+        }
+
     }
 
     private void Start()
     {
+        if (PlayerScript.instance != null)
+        {
+            PlayerScript.instance.onCurrencyChanged += UpdateCurrencyUI;
+
+            PlayerScript.instance.onExperienceChanged += UpdateExperienceUI;
+
+            PlayerScript.instance.onHungerChanged += UpdateHungerUI;
+        }
         UpdateCurrencyUI();
         UpdateExperienceUI();
         UpdateHungerUI();
     }
+
+    // Jangan lupa bersihkan event saat UI mati/hancur
+    private void OnDestroy()
+    {
+        if (PlayerScript.instance != null)
+        {
+            PlayerScript.instance.onCurrencyChanged -= UpdateCurrencyUI;
+
+            PlayerScript.instance.onExperienceChanged -= UpdateExperienceUI;
+
+            PlayerScript.instance.onHungerChanged -= UpdateHungerUI;
+        }
+    }
+
 
     public void UpdateExperienceUI()
     {

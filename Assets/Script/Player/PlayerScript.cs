@@ -42,15 +42,6 @@ public class PlayerScript : MonoBehaviour
     public event Action onHungerChanged;
     public event Action onExperienceChanged;
     public event Action onCurrencyChanged;
-
-
-    //private void Start()
-    //{
-    //    Debug.Log("Start");
-    //    onExperienceChanged?.Invoke();
-    //    onCurrencyChanged?.Invoke();
-    //    onHungerChanged?.Invoke();
-    //}
     public void AddExperience(float exp)
     {
         currentExperience += exp;

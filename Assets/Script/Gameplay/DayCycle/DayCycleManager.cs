@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class DayCycleManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
     [Header("Day")]
     [SerializeField] private int dayCount = 1;
     public int DayCount => dayCount;
@@ -32,8 +34,19 @@ public class DayCycleManager : MonoBehaviour
     [Header("NPC")]
     [SerializeField] private List<ShopHour> listShop = new List<ShopHour>();
 
-    [Header("Reference")]
-    [SerializeField] private DayCycleUI dayCycleUI;
+
+    [Header("Setting New Day")]
+    private bool dayEnd;
+    [SerializeField] private int minuteStart;
+    [SerializeField] private int hourStart;
+
+    //[Header("Reference")]
+    //[SerializeField] private DayCycleUI dayCycleUI;
+
+
+    //Event
+    public event Action onTimeChanged;
+
 
     private void Start()
     {
@@ -41,7 +54,7 @@ public class DayCycleManager : MonoBehaviour
     }
     private void Update()
     {
-        if (onGameplay)
+        if (onGameplay && !dayEnd)
         {
             currCountdown += Time.deltaTime;
 
@@ -62,7 +75,8 @@ public class DayCycleManager : MonoBehaviour
             minute -= 60;
             AddHour(1);
         }
-        dayCycleUI.UpdateDayCycleUI();
+
+        onTimeChanged?.Invoke();
         CheckShopStatus();
     }
 
@@ -71,16 +85,23 @@ public class DayCycleManager : MonoBehaviour
         hour += value;
         if (hour >= 24)
         {
-            NextDay();
+            hour = 24;
+            dayEnd = true;
         }
-        dayCycleUI.UpdateDayCycleUI();
+
+        onTimeChanged?.Invoke();
         CheckShopStatus();
     }
 
     public void NextDay()
     {
         dayCount++;
-        dayCycleUI.UpdateDayCycleUI();
+        dayEnd = false;
+        minute = minuteStart;
+        hour = hourStart;
+
+        onTimeChanged?.Invoke();
+
     }
 
 
