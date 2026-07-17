@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Direction")]
     [SerializeField] private Vector2 currentDirection;
     [SerializeField] private Vector2 lastDirection;
+    public Vector2 LastDirection => lastDirection;
+
     [SerializeField] private bool alreadyRotate;
 
     [Header("Reference")]

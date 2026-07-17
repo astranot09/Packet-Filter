@@ -14,6 +14,19 @@ public class InputFieldGrabber : MonoBehaviour
 
     public void SubmitName()
     {
+        if (!string.IsNullOrWhiteSpace(inputText))
+        {
+            // Jika valid, potong spasi di awal/akhir nama agar lebih rapi (opsional)
+            string cleanName = inputText.Trim();
+
+            GameManager.instance.SubmitPlayerName(cleanName);
+            SceneController.instance.GameScene();
+        }
+        else
+        {
+            Debug.LogWarning("Nama tidak boleh kosong atau hanya berisi spasi!");
+            return;
+        }
 
     }
 

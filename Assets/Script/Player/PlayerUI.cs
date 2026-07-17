@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 public class PlayerUI : MonoBehaviour
 {
+    [Header("Name")]
+    [SerializeField] private TMP_Text playerNameUI;
+
     [Header("Currency")]
     [SerializeField] private TMP_Text playerCurrencyUI;
 
@@ -24,6 +27,8 @@ public class PlayerUI : MonoBehaviour
             PlayerScript.instance.onExperienceChanged += UpdateExperienceUI;
 
             PlayerScript.instance.onHungerChanged += UpdateHungerUI;
+
+            PlayerScript.instance.onGameStart += UpdateNameUI;
         }
 
     }
@@ -36,6 +41,8 @@ public class PlayerUI : MonoBehaviour
             PlayerScript.instance.onExperienceChanged -= UpdateExperienceUI;
 
             PlayerScript.instance.onHungerChanged -= UpdateHungerUI;
+
+            PlayerScript.instance.onGameStart -= UpdateNameUI;
         }
 
     }
@@ -49,10 +56,13 @@ public class PlayerUI : MonoBehaviour
             PlayerScript.instance.onExperienceChanged += UpdateExperienceUI;
 
             PlayerScript.instance.onHungerChanged += UpdateHungerUI;
+
+            PlayerScript.instance.onGameStart += UpdateNameUI;
         }
         UpdateCurrencyUI();
         UpdateExperienceUI();
         UpdateHungerUI();
+        
     }
 
     // Jangan lupa bersihkan event saat UI mati/hancur
@@ -65,6 +75,8 @@ public class PlayerUI : MonoBehaviour
             PlayerScript.instance.onExperienceChanged -= UpdateExperienceUI;
 
             PlayerScript.instance.onHungerChanged -= UpdateHungerUI;
+
+            PlayerScript.instance.onGameStart -= UpdateNameUI;
         }
     }
 
@@ -86,9 +98,8 @@ public class PlayerUI : MonoBehaviour
         playerCurrencyUI.text = PlayerScript.instance.Currency.ToString();
     }
 
-
-    IEnumerator EventCoroutine()
+    public void UpdateNameUI()
     {
-        yield return null;
+        playerNameUI.text = PlayerScript.instance.PlayerName;
     }
 }

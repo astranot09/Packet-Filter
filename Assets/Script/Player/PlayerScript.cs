@@ -15,8 +15,8 @@ public class PlayerScript : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-
+    [SerializeField] private string playerName;
+    public string PlayerName => playerName;
 
     [Header("Level")]
     [SerializeField] private int playerLevel;
@@ -42,6 +42,18 @@ public class PlayerScript : MonoBehaviour
     public event Action onHungerChanged;
     public event Action onExperienceChanged;
     public event Action onCurrencyChanged;
+
+    public event Action onGameStart;
+
+    private void Start()
+    {
+        if(GameManager.instance != null)
+        {
+            playerName = GameManager.instance.PlayerName;
+            onGameStart?.Invoke();
+        }
+    }
+
     public void AddExperience(float exp)
     {
         currentExperience += exp;
