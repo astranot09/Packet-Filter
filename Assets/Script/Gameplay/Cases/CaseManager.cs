@@ -11,10 +11,35 @@ public enum CaseCategory
 }
 
 [System.Serializable]
+public enum CaseAnalyzer
+{
+    //Phising
+    FakeDomain,
+    FakeLink,
+    RequestOTP,
+    FakeIdentity,
+    //Smishing
+    UnknownNumber,
+    ShortLink,
+    //Vishing
+    SenseOfUrgency,
+    SocialPressure
+}
+
+
+[System.Serializable]
+public class IndicatorCategory
+{
+    public CaseAnalyzer caseAnalyzer;
+    public List<CaseSO> categoryData;
+}
+
+
+[System.Serializable]
 public class CategoryDatas
 {
     public CaseCategory caseCategory;
-    public List<CaseCategory> categoryData; //ganti SO
+    public List<IndicatorCategory> categoryData; //ganti SO
 }
 
 
@@ -30,5 +55,5 @@ public class CaseManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public List<CategoryDatas> categoryDatas;
+    public List<CategoryDatas> caseDatas;
 }

@@ -5570,13 +5570,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d7e366a667e5b40b8e101eeaa47880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  categoryDatas:
+  caseDatas:
   - caseCategory: 0
-    categoryData: 
-  - caseCategory: 1
-    categoryData: 
-  - caseCategory: 2
-    categoryData: 
+    categoryData:
+    - caseAnalyzer: 0
+      categoryData: []
 --- !u!4 &1305685108
 Transform:
   m_ObjectHideFlags: 0
