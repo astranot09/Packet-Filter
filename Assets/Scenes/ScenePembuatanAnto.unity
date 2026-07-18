@@ -5574,7 +5574,8 @@ MonoBehaviour:
   - caseCategory: 0
     categoryData:
     - caseAnalyzer: 0
-      categoryData: []
+      categoryData:
+      - {fileID: 0}
 --- !u!4 &1305685108
 Transform:
   m_ObjectHideFlags: 0
