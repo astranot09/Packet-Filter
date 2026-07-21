@@ -15,6 +15,8 @@ public class PlayerScript : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+
     [SerializeField] private string playerName;
     public string PlayerName => playerName;
 
