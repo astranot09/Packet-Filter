@@ -99,6 +99,7 @@ public class DayCycleManager : MonoBehaviour
         dayEnd = false;
         minute = minuteStart;
         hour = hourStart;
+        currCountdown = 0;
 
         onTimeChanged?.Invoke();
 

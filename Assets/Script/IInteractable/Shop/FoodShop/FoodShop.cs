@@ -14,6 +14,8 @@ public class FoodShop : ShopHour, IInteractable
         if (isOpen)
         {
             Debug.Log("Food Shop Buka");
+            FoodShopManager.instance.OpenShop();
+            PlayerInputController.instance.TurnOffPlayerInput();
         }
     }
 

@@ -36,10 +36,24 @@ public class FoodShopManager : MonoBehaviour
 
     [Header("Cart")]
     [SerializeField] private List<FoodCart> cartFoodData = new List<FoodCart>();
+    [SerializeField] private Transform foodCartSpawner;
+    [SerializeField] private GameObject foodCartPrefab;
 
+    [Header("UI")]
+    [SerializeField] private GameObject shopPanel;
 
-    private void Start()
+    public void OpenShop()
     {
+        ClearCart();
+        if (shopPanel.activeSelf)
+        {
+            PlayerInputController.instance.TurnOnPlayerInput();
+        }
+        shopPanel.SetActive(!shopPanel.activeSelf);
+
+
+        if (foodSpawner.childCount > 0) return;
+
         foreach(var foodShop in allFoodData)
         {
             if (foodShop != null)
@@ -67,11 +81,13 @@ public class FoodShopManager : MonoBehaviour
             // Item isn't in cart yet, create new entry
             cartFoodData.Add(new FoodCart(item, 1));
         }
+        UpdateUICart();
     }
 
     public void ClearCart()
     {
         cartFoodData.Clear();
+        UpdateUICart();
     }
 
     public void BuyItem()
@@ -84,25 +100,18 @@ public class FoodShopManager : MonoBehaviour
             return;
         }
 
-        // Example purchase check (replace PlayerCurrency with your actual currency system)
-        /*
-        if (PlayerCurrency.instance.HasEnoughMoney(totalCost))
+        if (PlayerScript.instance.CheckCurrency(totalCost))
         {
-            PlayerCurrency.instance.DeductMoney(totalCost);
-            
-            // Give items to player inventory here...
-
+            PlayerScript.instance.RemoveCurrency(totalCost);
             ClearCart();
+            Debug.Log($"Purchased items for total: {totalCost}");
             Debug.Log("Purchase Successful!");
         }
         else
         {
             Debug.Log("Not enough money!");
         }
-        */
 
-        Debug.Log($"Purchased items for total: {totalCost}");
-        ClearCart();
     }
 
     public int ItemPriceCalculation()
@@ -121,5 +130,17 @@ public class FoodShopManager : MonoBehaviour
         return totalPrice;
     }
 
+    public void UpdateUICart()
+    {
+        foreach (Transform child in foodCartSpawner)
+        {
+            Destroy(child.gameObject);
+        }
 
+        foreach (FoodCart cartItem in cartFoodData)
+        {
+            GameObject x = Instantiate(foodCartPrefab, foodCartSpawner);
+            x.GetComponent<CartItemPrefab>().SetUpItem(cartItem);
+        }
+    }
 }

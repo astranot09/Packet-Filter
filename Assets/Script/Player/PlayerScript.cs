@@ -103,10 +103,15 @@ public class PlayerScript : MonoBehaviour
     }
     public void RemoveCurrency(int value)
     {
-        if(currentCurrency - value < 0) return;
+        if(!CheckCurrency(value)) return;
 
         currentCurrency -= value;
 
         onCurrencyChanged?.Invoke();
+    }
+
+    public bool CheckCurrency(int value)
+    {
+        return currentCurrency >= value;
     }
 }
