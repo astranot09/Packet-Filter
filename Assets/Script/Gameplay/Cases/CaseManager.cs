@@ -18,9 +18,11 @@ public enum CaseAnalyzer
     FakeLink,
     RequestOTP,
     FakeIdentity,
+
     //Smishing
     UnknownNumber,
     ShortLink,
+
     //Vishing
     SenseOfUrgency,
     SocialPressure
@@ -31,7 +33,7 @@ public enum CaseAnalyzer
 public class IndicatorCategory
 {
     public CaseAnalyzer caseAnalyzer;
-    public List<CaseSO> categoryData;
+    public List<CaseSO> categorySO;
 }
 
 
@@ -39,7 +41,7 @@ public class IndicatorCategory
 public class CategoryDatas
 {
     public CaseCategory caseCategory;
-    public List<IndicatorCategory> categoryData; //ganti SO
+    public List<IndicatorCategory> categoryData;
 }
 
 
@@ -56,4 +58,23 @@ public class CaseManager : MonoBehaviour
     }
 
     public List<CategoryDatas> caseDatas;
+
+
+    [Header("Setting")]
+    [SerializeField] private int maxCases = 10;
+    [SerializeField] private GameObject casePrefab;
+    [SerializeField] private Transform caseSpawner;
+
+    private List<CategoryDatas> currCases;
+
+    public void DailyCaseSpawn()
+    {
+        int i = currCases.Count;
+
+        for(int j = 0; j < i; j++)
+        {
+            GameObject x = Instantiate(casePrefab,caseSpawner);
+        }
+    }
+
 }
