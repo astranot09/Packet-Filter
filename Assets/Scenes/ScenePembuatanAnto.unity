@@ -6778,6 +6778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1305685108}
   - component: {fileID: 1305685107}
+  - component: {fileID: 1305685109}
   m_Layer: 0
   m_Name: CaseManager
   m_TagString: Untagged
@@ -6797,12 +6798,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d7e366a667e5b40b8e101eeaa47880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caseDatas:
-  - caseCategory: 0
-    categoryData:
-    - caseAnalyzer: 0
-      categoryData:
-      - {fileID: 0}
+  mailAnalyzerLevel: 1
+  smsAnalyzerLevel: 1
+  voiceAnalyzerLevel: 1
+  voiceAnalyzerUnlocked: 4
+  maxCases: 10
+  casePrefab: {fileID: 0}
+  caseSpawner: {fileID: 0}
+  currentCaseCategory: 0
 --- !u!4 &1305685108
 Transform:
   m_ObjectHideFlags: 0
@@ -6818,6 +6821,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2041498500}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1305685109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305685106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cedad1e3970ae4cb64b167a96b9ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phishingData:
+    categoryData:
+    - caseAnalyzer: 0
+      levelUnlocked: 0
+      categorySO: []
+  smishingData:
+    categoryData: []
+  vishingData:
+    categoryData: []
 --- !u!1 &1315193051
 GameObject:
   m_ObjectHideFlags: 0

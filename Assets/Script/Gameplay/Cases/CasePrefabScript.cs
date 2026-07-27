@@ -6,13 +6,13 @@ using TMPro;
 public class CasePrefabScript : MonoBehaviour
 {
     [Header("Data")]
-    [SerializeField] private CategoryDatas caseData;
+    [SerializeField] private List<CaseList> caseData;
 
     [Header("UI")]
     [SerializeField] private Image profileImage;
 
-    public void SetUp(CategoryDatas data)
+    public void SetUp(CaseCategory category)
     {
-        caseData = data;
+        caseData = CaseDatabase.instance.GetCaseData(category);
     }
 }

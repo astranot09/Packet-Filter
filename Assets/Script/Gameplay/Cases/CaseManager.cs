@@ -1,48 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public enum CaseCategory
-{
-    Phising,
-    Smishing,
-    Vishing
-}
-
-[System.Serializable]
-public enum CaseAnalyzer
-{
-    //Phising
-    FakeDomain,
-    FakeLink,
-    RequestOTP,
-    FakeIdentity,
-
-    //Smishing
-    UnknownNumber,
-    ShortLink,
-
-    //Vishing
-    SenseOfUrgency,
-    SocialPressure
-}
-
-
-[System.Serializable]
-public class IndicatorCategory
-{
-    public CaseAnalyzer caseAnalyzer;
-    public List<CaseSO> categorySO;
-}
-
-
-[System.Serializable]
-public class CategoryDatas
-{
-    public CaseCategory caseCategory;
-    public List<IndicatorCategory> categoryData;
-}
 
 
 public class CaseManager : MonoBehaviour
@@ -57,24 +16,49 @@ public class CaseManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public List<CategoryDatas> caseDatas;
-
+    [Header("Category")]
+    [SerializeField] private int mailAnalyzerLevel;
+    public int PhishingLevel => mailAnalyzerLevel;
+    [SerializeField] private int smsAnalyzerLevel;
+    public int SmishingLevel => smsAnalyzerLevel;
+    [SerializeField] private int voiceAnalyzerLevel;
+    public int VishingLevel => voiceAnalyzerLevel;
+    [SerializeField] private int voiceAnalyzerUnlocked = 4;
 
     [Header("Setting")]
     [SerializeField] private int maxCases = 10;
     [SerializeField] private GameObject casePrefab;
     [SerializeField] private Transform caseSpawner;
 
-    private List<CategoryDatas> currCases;
+    private List<CaseList> currCases;
+    [SerializeField] private CaseCategory currentCaseCategory;
+
+
+
+
+    public void SwitchCaseCategory(CaseCategory caseCategory)
+    {
+        currentCaseCategory = caseCategory;
+    }
 
     public void DailyCaseSpawn()
     {
-        int i = currCases.Count;
+        int i = maxCases - currCases.Count;
 
-        for(int j = 0; j < i; j++)
+        for (int j = 0; j < i; j++)
         {
-            GameObject x = Instantiate(casePrefab,caseSpawner);
+            GameObject x = Instantiate(casePrefab, caseSpawner);
+            x.GetComponent<CasePrefabScript>().SetUp(GetRandomCaseCategory());
         }
     }
+    private CaseCategory GetRandomCaseCategory()
+    {
+        if(PlayerScript.instance.PlayerLevel < voiceAnalyzerUnlocked)
+        {
+            return UnityEngine.Random.value > 0.5f ? CaseCategory.Phishing : CaseCategory.Smishing;
+        }
 
+        Array values = Enum.GetValues(typeof(CaseCategory));
+        return (CaseCategory)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+    }
 }
