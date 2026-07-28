@@ -30,11 +30,14 @@ public class CaseManager : MonoBehaviour
     [SerializeField] private GameObject casePrefab;
     [SerializeField] private Transform caseSpawner;
 
-    private List<CaseList> currCases;
+    [SerializeField] private List<CaseList> currCases;
     [SerializeField] private CaseCategory currentCaseCategory;
 
 
-
+    private void Start()
+    {
+        DailyCaseSpawn();
+    }
 
     public void SwitchCaseCategory(CaseCategory caseCategory)
     {
