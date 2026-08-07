@@ -23,7 +23,8 @@ public class CaseManager : MonoBehaviour
     public int SmishingLevel => smsAnalyzerLevel;
     [SerializeField] private int voiceAnalyzerLevel;
     public int VishingLevel => voiceAnalyzerLevel;
-    [SerializeField] private int voiceAnalyzerUnlocked = 4;
+    [SerializeField] private bool voiceAnalyzerUnlocked= false;
+    public bool VoiceAnalyzerUnlocked => voiceAnalyzerUnlocked;
 
     [Header("Setting")]
     [SerializeField] private int maxCases = 10;
@@ -33,6 +34,10 @@ public class CaseManager : MonoBehaviour
     [SerializeField] private List<CaseList> currCases;
     [SerializeField] private CaseCategory currentCaseCategory;
 
+    [Header("Application Panel")]
+    [SerializeField] private GameObject mailAnalyzerPanel;
+    [SerializeField] private GameObject smsAnalyzerPanel;
+    [SerializeField] private GameObject voiceAnalyzerPanel;
 
     private void Start()
     {
@@ -42,6 +47,20 @@ public class CaseManager : MonoBehaviour
     public void SwitchCaseCategory(CaseCategory caseCategory)
     {
         currentCaseCategory = caseCategory;
+
+        switch (currentCaseCategory)
+        {
+            case CaseCategory.Phishing:
+                //mailAnalyzerPanel.SetActive(true);
+                break;
+            case CaseCategory.Smishing:
+                //smsAnalyzerPanel.SetActive(true);
+                break;
+            case CaseCategory.Vishing:
+                //voiceAnalyzerPanel.SetActive(true);
+                break;
+        }
+
     }
 
     public void DailyCaseSpawn()
@@ -56,7 +75,7 @@ public class CaseManager : MonoBehaviour
     }
     private CaseCategory GetRandomCaseCategory()
     {
-        if(PlayerScript.instance.PlayerLevel < voiceAnalyzerUnlocked)
+        if(!VoiceAnalyzerUnlocked)
         {
             return UnityEngine.Random.value > 0.5f ? CaseCategory.Phishing : CaseCategory.Smishing;
         }

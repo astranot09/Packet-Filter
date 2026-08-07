@@ -9,6 +9,7 @@ public class CasePrefabScript : MonoBehaviour
     [SerializeField] private List<CaseList> caseData;
     [SerializeField] private int index;
     [SerializeField] private string npcName;
+    [SerializeField] private CaseCategory caseCategory;
 
     [Header("UI")]
     [SerializeField] private Image profileImage;
@@ -29,4 +30,10 @@ public class CasePrefabScript : MonoBehaviour
             indexText.text = (index + 1).ToString();
         }
     }
+    
+    public void OpenDescription()
+    {
+        CaseDescriptionInCaseManager.instance.SetUpDrescription(caseData, caseCategory);
+    }
+
 }
