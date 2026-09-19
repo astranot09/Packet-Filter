@@ -20,7 +20,7 @@ public class InputFieldGrabber : MonoBehaviour
             string cleanName = inputText.Trim();
 
             GameManager.instance.SubmitPlayerName(cleanName);
-            SceneController.instance.GameScene();
+            SceneController.instance.LoadSceneByIndexPlus();
         }
         else
         {
