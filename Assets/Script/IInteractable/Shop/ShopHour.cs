@@ -10,6 +10,8 @@ public class ShopHour : MonoBehaviour
 
     [SerializeField] protected bool isOpen;
 
+    [SerializeField] protected DialogueSO dialogueShopClose;
+
     public virtual void ShopOpen()
     {
         isOpen = true;

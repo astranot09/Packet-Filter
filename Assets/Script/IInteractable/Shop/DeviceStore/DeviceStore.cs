@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class DeviceStore : ShopHour, IInteractable
@@ -14,6 +15,11 @@ public class DeviceStore : ShopHour, IInteractable
         if (isOpen)
         {
             Debug.Log("Device Store Buka");
+        }
+        else
+        {
+            if(dialogueShopClose != null)
+                DialogueUI.instance.DialogueSetUp(dialogueShopClose);
         }
     }
 

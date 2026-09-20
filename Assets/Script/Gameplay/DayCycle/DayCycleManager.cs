@@ -40,6 +40,8 @@ public class DayCycleManager : MonoBehaviour
     [SerializeField] private int minuteStart;
     [SerializeField] private int hourStart;
 
+    [SerializeField] private int addStamina = 5;
+
     //[Header("Reference")]
     //[SerializeField] private DayCycleUI dayCycleUI;
 
@@ -100,7 +102,7 @@ public class DayCycleManager : MonoBehaviour
         minute = minuteStart;
         hour = hourStart;
         currCountdown = 0;
-
+        PlayerScript.instance.AddHunger(addStamina);
         onTimeChanged?.Invoke();
 
     }

@@ -47,9 +47,13 @@ public class FoodShopManager : MonoBehaviour
         ClearCart();
         if (shopPanel.activeSelf)
         {
+            UIManager.instance.ClosePanel(shopPanel);
             PlayerInputController.instance.TurnOnPlayerInput();
         }
-        shopPanel.SetActive(!shopPanel.activeSelf);
+        else
+        {
+            UIManager.instance.OpenPanel(shopPanel);
+        }
 
 
         if (foodSpawner.childCount > 0) return;
@@ -93,7 +97,7 @@ public class FoodShopManager : MonoBehaviour
     public void BuyItem()
     {
         int totalCost = ItemPriceCalculation();
-
+        int totalStamina = HungerCalculation();
         if (cartFoodData.Count == 0)
         {
             Debug.Log("Cart is empty!");
@@ -103,6 +107,7 @@ public class FoodShopManager : MonoBehaviour
         if (PlayerScript.instance.CheckCurrency(totalCost))
         {
             PlayerScript.instance.RemoveCurrency(totalCost);
+            PlayerScript.instance.AddHunger(totalStamina);
             ClearCart();
             Debug.Log($"Purchased items for total: {totalCost}");
             Debug.Log("Purchase Successful!");
@@ -142,5 +147,20 @@ public class FoodShopManager : MonoBehaviour
             GameObject x = Instantiate(foodCartPrefab, foodCartSpawner);
             x.GetComponent<CartItemPrefab>().SetUpItem(cartItem);
         }
+    }
+    public int HungerCalculation()
+    {
+        int totalPrice = 0;
+
+        foreach (FoodCart cartItem in cartFoodData)
+        {
+            if (cartItem.food != null)
+            {
+                // Assumes your FoodShopSO scriptable object has a 'price' variable
+                totalPrice += cartItem.food.foodStamina * cartItem.quantity;
+            }
+        }
+
+        return totalPrice;
     }
 }

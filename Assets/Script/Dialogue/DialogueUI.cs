@@ -18,8 +18,6 @@ public class DialogueUI : MonoBehaviour
     }
 
 
-
-
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private DialogueSO dialogueSO;
 
@@ -37,7 +35,7 @@ public class DialogueUI : MonoBehaviour
 
     private void Start()
     {
-        DialogueSetUp(dialogueSO);
+        //DialogueSetUp(dialogueSO);
     }
 
     public void DialogueSetUp(DialogueSO newDialogueSO)
@@ -45,19 +43,17 @@ public class DialogueUI : MonoBehaviour
         dialogueSO = newDialogueSO;
         dialoguePanel.SetActive(true);
 
-        // Safely stop any running dialogue before starting a new one
         if (dialogueCoroutine != null)
         {
-            StopCoroutine(dialogueCoroutine);
+            return;
+            //StopCoroutine(dialogueCoroutine);
         }
 
-        // FIX: Start the coroutine instead of calling the setup method again
         dialogueCoroutine = StartCoroutine(StepThroughDialogue(dialogueSO));
     }
 
     private IEnumerator StepThroughDialogue(DialogueSO dialogueSO)
     {
-        // FIX: Loop through the actual list of data, node by node
         foreach (DialogueData dialogueData in dialogueSO.dialogueDatas)
         {
             // 1. Set the speaker's name and sprites
@@ -81,8 +77,6 @@ public class DialogueUI : MonoBehaviour
 
     private void UpdateSpeakerVisuals(DialogueData data)
     {
-        // Simple visual feedback: dim the speaker who isn't talking
-        // (Assumes you are using the Enum approach, or checking your booleans)
         if (data.speaker1Sprite)
         {
             speaker1Image.color = Color.white;
